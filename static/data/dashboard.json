@@ -1,0 +1,25 @@
+{
+  "avg_scores": {
+    "math": 54.5,
+    "reading": 53.6,
+    "writing": 52.1
+  },
+  "pass_fail": {
+    "pass": 82.3,
+    "fail": 17.7
+  },
+  "study_trend": [
+    42.2,
+    50.2,
+    50.9,
+    57.0,
+    56.6,
+    56.3
+  ],
+  "quick_stats": {
+    "total_students": 395,
+    "avg_attendance": "93.9%",
+    "success_rate": "82.3%",
+    "high_risk_students": "17.7%"
+  }
+}

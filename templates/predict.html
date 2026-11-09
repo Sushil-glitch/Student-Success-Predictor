@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Predict student academic performance score percentage based on study habits, background, and test prep.">
     <title>Performance Prediction | StudentAI</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
@@ -19,7 +20,7 @@
             <li><a href="about.html">About</a></li>
         </ul>
 
-        <div class="menu-toggle" id="mobile-menu-btn">
+        <div class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu">
             <span></span>
             <span></span>
             <span></span>
@@ -31,7 +32,7 @@
     <div class="mobile-menu" id="mobile-menu">
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="predict.html">Performance</a></li>
+            <li><a href="predict.html" class="active">Performance</a></li>
             <li><a href="dropout.html">Dropout Risk</a></li>
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="about.html">About</a></li>
@@ -41,31 +42,31 @@
     <header class="hero">
         <div class="hero-content">
             <h1>Student <span>Performance</span></h1>
-            <p>Advanced simulation to predict academic outcomes based on background and habits.</p>
+            <p>Predict academic percentage outcomes based on study habits, schooling environment, and test preparation.</p>
         </div>
         <div class="hero-image">
-            <img src="static/images/predict.png" alt="Performance AI">
+            <img src="../static/images/predict.png" alt="Performance prediction AI interface">
         </div>
     </header>
 
     <main class="container">
         <div class="card" style="max-width: 600px; margin: 0 auto;">
             <h2>Input Student Details</h2>
-            <form id="predictForm">
+            <form id="predictForm" novalidate>
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <select id="gender" required>
+                    <select id="gender" name="gender" required>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="studyHours">Study Hours (per week)</label>
-                    <input type="number" id="studyHours" placeholder="e.g. 5" min="0" max="10" required>
+                    <input type="number" id="studyHours" name="studyHours" placeholder="e.g. 5" min="0" max="24" step="0.5" required>
                 </div>
                 <div class="form-group">
-                    <label for="parentEdu">Parental Education</label>
-                    <select id="parentEdu" required>
+                    <label for="parentEdu">Parental Education Level</label>
+                    <select id="parentEdu" name="parentEdu" required>
                         <option value="high_school">High School</option>
                         <option value="bachelors">Bachelor's Degree</option>
                         <option value="masters">Master's Degree</option>
@@ -73,14 +74,14 @@
                 </div>
                 <div class="form-group">
                     <label for="schoolType">School Type</label>
-                    <select id="schoolType" required>
-                        <option value="private">Private School</option>
+                    <select id="schoolType" name="schoolType" required>
                         <option value="government">Government School</option>
+                        <option value="private">Private School</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="board">Education Board</label>
-                    <select id="board" required>
+                    <select id="board" name="board" required>
                         <option value="cbse">CBSE</option>
                         <option value="icse">ICSE</option>
                         <option value="state">State Board</option>
@@ -90,8 +91,8 @@
                 </div>
                 <div class="form-group">
                     <label for="testPrep">Test Preparation Course</label>
-                    <select id="testPrep" required>
-                        <option value="none">No Option</option>
+                    <select id="testPrep" name="testPrep" required>
+                        <option value="none">None / No Course</option>
                         <option value="50_percent">50% Completed</option>
                         <option value="75_percent">75% Completed</option>
                         <option value="completed">Completed</option>
@@ -101,9 +102,9 @@
                 <button type="submit" class="btn">Predict Performance</button>
             </form>
 
-            <div id="spinner" class="spinner"></div>
+            <div id="spinner" class="spinner" style="display: none;"></div>
 
-            <div id="resultBox" class="result-box"></div>
+            <div id="resultBox" class="result-box" style="display: none;"></div>
         </div>
     </main>
 
@@ -111,6 +112,6 @@
         <p>&copy; 2026 Student Success Predictor Project. Built by Reddy Website Builders</p>
     </footer>
 
-    <script src="static/js/script.js"></script>
+    <script src="../static/js/script.js"></script>
 </body>
 </html>

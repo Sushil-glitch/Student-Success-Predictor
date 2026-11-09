@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Analytics Dashboard - Visualizing student benchmark scores, pass/fail distribution, and study hour performance trends.">
     <title>Analytics Dashboard | StudentAI</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- Pinned Chart.js v4.4.7 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -20,7 +22,7 @@
             <li><a href="about.html">About</a></li>
         </ul>
 
-        <div class="menu-toggle" id="mobile-menu-btn">
+        <div class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu">
             <span></span>
             <span></span>
             <span></span>
@@ -34,7 +36,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="predict.html">Performance</a></li>
             <li><a href="dropout.html">Dropout Risk</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
     </div>
@@ -42,17 +44,17 @@
     <header class="hero">
         <div class="hero-content">
             <h1>Analytics <span>Dashboard</span></h1>
-            <p>Comprehensive overview of student performance metrics and institutional trends.</p>
+            <p>Comprehensive overview of authentic student performance distributions, pass rates, and study trend analytics.</p>
         </div>
         <div class="hero-image">
-            <img src="static/images/dashboard_hero.png" alt="Analytics View">
+            <img src="../static/images/dashboard_hero.png" alt="Analytics View of Student Dataset">
         </div>
     </header>
 
     <main class="container">
         <div class="grid-container">
             <div class="card">
-                <h2>Average Scores by Subject</h2>
+                <h2>Average Scores by Period</h2>
                 <div class="chart-container">
                     <canvas id="scoresBarChart"></canvas>
                 </div>
@@ -70,13 +72,16 @@
                 </div>
             </div>
             <div class="card">
-                <h2>Quick Stats</h2>
-                <div style="margin-top: 1rem;">
-                    <p><strong>Total Students Evaluated:</strong> 1,240</p>
-                    <p><strong>Average Attendance:</strong> 84%</p>
-                    <p><strong>Success Rate:</strong> 78.5%</p>
-                    <p><strong>High Risk Students:</strong> 12%</p>
+                <h2>Dataset Quick Stats</h2>
+                <div style="margin-top: 1rem; line-height: 2;">
+                    <p><strong>Total Students Evaluated:</strong> <span id="stat-total">395</span></p>
+                    <p><strong>Average Attendance:</strong> <span id="stat-attendance">93.9%</span></p>
+                    <p><strong>Success Rate (>=40%):</strong> <span id="stat-success">82.3%</span></p>
+                    <p><strong>High Risk Students:</strong> <span id="stat-highrisk">17.7%</span></p>
                 </div>
+                <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 1rem;">
+                    <em>Data computed directly from the UCI Student Performance benchmark dataset.</em>
+                </p>
             </div>
         </div>
     </main>
@@ -85,6 +90,8 @@
         <p>&copy; 2026 Student Success Predictor Project. Built by Reddy Website Builders</p>
     </footer>
 
-    <script src="static/js/charts.js"></script>
+    <!-- Scripts: chart loader followed by navigation handling -->
+    <script src="../static/js/charts.js"></script>
+    <script src="../static/js/script.js"></script>
 </body>
 </html>

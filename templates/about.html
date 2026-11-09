@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Student Success Predictor - Architectural details, methodology, datasets, and machine learning models.">
+    <title>About | StudentAI</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">🚀 <span>StudentAI</span></a>
+        
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="predict.html">Performance</a></li>
+            <li><a href="dropout.html">Dropout Risk</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+        </ul>
+
+        <div class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="predict.html">Performance</a></li>
+            <li><a href="dropout.html">Dropout Risk</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+        </ul>
+    </div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>About the <span>Project</span></h1>
+            <p>The Student Success Predictor is an educational data science application combining machine learning modeling, rule-based heuristics, and real benchmark analytics.</p>
+        </div>
+        <div class="hero-image">
+            <img src="../static/images/about.png" alt="About the Student Success Predictor platform">
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card" style="max-width: 850px; margin: 0 auto; line-height: 1.8;">
+            <h2>Empowering Academic Excellence</h2>
+            <p>The Student Success Predictor is designed to provide actionable academic insights for educators, students, and institutions. By analyzing behavioral indicators, background parameters, and study commitments, the platform facilitates timely interventions to support student achievement.</p>
+            
+            <h2 style="margin-top: 2rem;">System Architecture &amp; Methodology</h2>
+            <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                <div>
+                    <h3 style="color: var(--primary);">Performance Prediction (ML)</h3>
+                    <p>Powered by a <strong>Random Forest Regressor</strong> and verified against a closed-form <strong>Linear Regression</strong> model. Trained on the UCI Student Performance benchmark dataset (Cortez &amp; Silva, 2008), evaluating 17 one-hot encoded features including weekly study hours, parental education, school type, education board, and test preparation course completion.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--danger);">Dropout Risk (Rule-Based)</h3>
+                    <p>Designed as a transparent <strong>Rule-Based Heuristic Evaluation</strong> (not machine learning). It flags students as High Risk when critical thresholds are breached: attendance below 50%, previous exam marks below 40%, or low attendance (&lt;65%) coupled with low marks (&lt;50%) and minimal study hours (&lt;3 hrs/wk).</p>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 2rem;">Interactive Analytics &amp; Open Datasets</h2>
+            <p>The analytics dashboard displays aggregate metrics directly computed from authentic student performance data (G1 math, G2 reading, G3 composite scores, absences, and study time intervals). The platform supports dual-mode deployment: running as a <strong>Python Flask</strong> web API server, or hosted statically on <strong>GitHub Pages</strong> with deterministic client-side calculation engines.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Student Success Predictor Project. Built by Reddy Website Builders</p>
+    </footer>
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

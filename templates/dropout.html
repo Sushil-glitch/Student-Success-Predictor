@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dropout Prediction | StudentAI</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <meta name="description" content="Dropout Risk Assessment - Rule-based heuristic evaluation to identify students needing intervention.">
+    <title>Dropout Risk Assessment | StudentAI</title>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
@@ -19,7 +20,7 @@
             <li><a href="about.html">About</a></li>
         </ul>
 
-        <div class="menu-toggle" id="mobile-menu-btn">
+        <div class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu">
             <span></span>
             <span></span>
             <span></span>
@@ -32,7 +33,7 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="predict.html">Performance</a></li>
-            <li><a href="dropout.html">Dropout Risk</a></li>
+            <li><a href="dropout.html" class="active">Dropout Risk</a></li>
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
@@ -41,36 +42,39 @@
     <header class="hero">
         <div class="hero-content">
             <h1>Dropout <span>Risk Alert</span></h1>
-            <p>Pre-emptive detection of students who may need additional support to stay on track.</p>
+            <p>Rule-based heuristic risk assessment evaluating attendance records, weekly study commitment, and academic scores.</p>
         </div>
         <div class="hero-image">
-            <img src="static/images/risk.png" alt="Dropout Alert">
+            <img src="../static/images/risk.png" alt="Dropout Risk Alert interface">
         </div>
     </header>
 
     <main class="container">
         <div class="card" style="max-width: 600px; margin: 0 auto;">
             <h2>Input Risk Indicators</h2>
-            <form id="dropoutForm">
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem;">
+                <em>Note: This module utilizes a documented rule-based heuristic threshold system, not machine learning.</em>
+            </p>
+            <form id="dropoutForm" novalidate>
                 <div class="form-group">
                     <label for="attendance">Attendance Percentage (%)</label>
-                    <input type="number" id="attendance" placeholder="e.g. 75" min="0" max="100" required>
+                    <input type="number" id="attendance" name="attendance" placeholder="e.g. 75" min="0" max="100" step="1" required>
                 </div>
                 <div class="form-group">
-                    <label for="studyHours">Study Hours</label>
-                    <input type="number" id="studyHours" placeholder="e.g. 5" min="0" max="24" required>
+                    <label for="studyHours">Study Hours (per week)</label>
+                    <input type="number" id="studyHours" name="studyHours" placeholder="e.g. 5" min="0" max="24" step="0.5" required>
                 </div>
                 <div class="form-group">
                     <label for="marks">Previous Marks (%)</label>
-                    <input type="number" id="marks" placeholder="e.g. 60" min="0" max="100" required>
+                    <input type="number" id="marks" name="marks" placeholder="e.g. 60" min="0" max="100" step="1" required>
                 </div>
                 
                 <button type="submit" class="btn" style="background: var(--danger);">Analyze Risk</button>
             </form>
 
-            <div id="dropoutSpinner" class="spinner"></div>
+            <div id="dropoutSpinner" class="spinner" style="display: none;"></div>
 
-            <div id="dropoutResult" class="result-box"></div>
+            <div id="dropoutResult" class="result-box" style="display: none;"></div>
         </div>
     </main>
 
@@ -78,6 +82,6 @@
         <p>&copy; 2026 Student Success Predictor Project. Built by Reddy Website Builders</p>
     </footer>
 
-    <script src="static/js/script.js"></script>
+    <script src="../static/js/script.js"></script>
 </body>
 </html>

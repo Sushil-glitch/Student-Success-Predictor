@@ -1,0 +1,31 @@
+{
+  "model_name": "LinearRegression (Analytical OLS)",
+  "features": [
+    "studyHours",
+    "gender_female",
+    "gender_male",
+    "parentEdu_bachelors",
+    "parentEdu_high_school",
+    "parentEdu_masters",
+    "schoolType_government",
+    "schoolType_private",
+    "board_cbse",
+    "board_ib",
+    "board_icse",
+    "board_igcse",
+    "board_state",
+    "testPrep_50_percent",
+    "testPrep_75_percent",
+    "testPrep_completed",
+    "testPrep_none"
+  ],
+  "n_samples": 395,
+  "train_samples": 316,
+  "test_samples": 79,
+  "random_state": 42,
+  "metrics": {
+    "r2_score": 0.6214,
+    "mean_absolute_error": 11.452
+  },
+  "target": "target_score (0-100 percentage)"
+}
