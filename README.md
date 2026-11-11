@@ -1,72 +1,87 @@
 # Student Success Predictor
 
-An end-to-end educational analytics platform featuring academic performance prediction, dropout risk assessment, and interactive benchmark dashboards. The system supports dual deployment modes: as a full-stack **Python Flask** web application or as a client-side static site on **GitHub Pages**.
+An end-to-end educational analytics platform featuring academic performance prediction, dropout risk assessment, and an interactive benchmark dashboard. The system supports two deployment modes: a full-stack **Python Flask** web application, or a client-side static site hosted on **GitHub Pages**.
 
 ---
 
 ## 📌 Project Overview
 
-The **Student Success Predictor** provides educators, students, and institutional leaders with data-driven predictive insights:
-- **Performance Prediction:** Estimates expected final academic percentages based on study hours, parental education, school environment, board of education, and test preparation course completion.
-- **Dropout Risk Alert:** Rule-based heuristic detection flagging at-risk students who need intervention based on attendance patterns, study commitments, and previous marks.
-- **Analytics Dashboard:** Real academic score distributions, pass/fail ratios, and study trend analytics computed directly from the benchmark dataset.
+The **Student Success Predictor** provides educators, students, and institutional leaders with data-driven insights:
+
+- **Performance Prediction:** Estimates the expected final academic percentage from study hours, gender, parental education, school type, board of education, and test preparation course completion.
+- **Dropout Risk Alert:** A rule-based heuristic that flags students who may need intervention, based on attendance, weekly study hours, and previous marks.
+- **Analytics Dashboard:** Score distributions, pass/fail ratios, and study-time trends computed directly from the benchmark dataset.
 
 ---
 
-## 🤖 Models & Methodology (Honest Description)
+## 🤖 Models & Methodology
 
 ### 1. Performance Prediction Model
-- **Model Type:** Scikit-Learn `RandomForestRegressor` (100 estimators, `random_state=42`) with analytical `LinearRegression` weights used for client-side static execution on GitHub Pages.
-- **Target Variable:** Final percentage score (`0.0` - `100.0%`).
+
+- **Model type:** Scikit-learn `RandomForestRegressor` (100 estimators, `random_state=42`) in Flask mode. In static GitHub Pages mode, a linear-regression approximation (weights extracted with `extract_weights.py`) runs in the browser, so static-mode predictions may differ slightly from Flask-mode predictions.
+- **Target variable:** Final percentage score (0.0 – 100.0%).
 - **Features (17 one-hot encoded columns):**
-  - `studyHours` (Numeric, 0 to 24 hours/week)
-  - `gender` (`male`, `female`)
-  - `parentEdu` (`high_school`, `bachelors`, `masters`)
-  - `schoolType` (`government`, `private`)
-  - `board` (`cbse`, `icse`, `state`, `ib`, `igcse`)
-  - `testPrep` (`none`, `50_percent`, `75_percent`, `completed`)
-- **Evaluation Metrics:**
-  - $R^2 \text{ Score}$: `0.6214`
-  - $\text{Mean Absolute Error (MAE)}$: `11.45%`
-  - Metrics are recorded in `model/metrics.json`.
-- **Serialized Model Artifacts:**
+
+| Feature | Type / Values |
+| :--- | :--- |
+| `studyHours` | Numeric, 0 – 24 hours/week |
+| `gender` | `male`, `female` |
+| `parentEdu` | `high_school`, `bachelors`, `masters` |
+| `schoolType` | `government`, `private` |
+| `board` | `cbse`, `icse`, `state`, `ib`, `igcse` |
+| `testPrep` | `none`, `50_percent`, `75_percent`, `completed` |
+
+- **Evaluation metrics** (recorded in `model/metrics.json`):
+  - R² score: `0.6214`
+  - Mean Absolute Error (MAE): `11.45%`
+- **Serialized artifacts:**
   - `model/performance_model.pkl` (~2.35 MB)
   - `model/model_columns.pkl` (~316 bytes)
 
 ### 2. Dropout Risk Assessment
-- **Evaluation Type:** **Rule-Based Heuristic Estimate** (*Explicitly not machine learning*).
-- **Indicators Analyzed:**
-  - `attendance`: Attendance percentage ($0 - 100\%$)
-  - `studyHours`: Weekly study hours ($0 - 24\text{ hrs}$)
-  - `marks`: Previous examination marks ($0 - 100\%$)
-- **Decision Logic:**
-  - Students are classified as **HIGH RISK** if:
-    - Attendance falls below $50\%$, OR
-    - Previous marks fall below $40\%$, OR
-    - Attendance is under $65\%$ with marks under $50\%$ and study hours under $3\text{ hrs/week}$.
-  - Otherwise, students are classified as **LOW RISK**.
+
+- **Type:** Rule-based heuristic estimate. This is **not** a machine learning model.
+- **Inputs:**
+  - `attendance`: attendance percentage (0 – 100%)
+  - `studyHours`: weekly study hours (0 – 24 hrs)
+  - `marks`: previous examination marks (0 – 100%)
+- **Decision logic:** A student is classified as **HIGH RISK** if any of the following is true:
+  - Attendance is below 50%
+  - Previous marks are below 40%
+  - Attendance is below 65% **and** marks are below 50% **and** study hours are below 3 hrs/week
+
+  Otherwise the student is classified as **LOW RISK**.
 
 ### 3. Dashboard Statistics
-- Unlike earlier mock implementations, the dashboard relies on **real statistics** computed directly from the UCI Student Performance dataset.
-- Stored as static JSON at `static/data/dashboard.json` and consumed via Chart.js.
+
+- The dashboard uses real aggregate statistics computed from the benchmark dataset (`data/student_data.csv`).
+- Results are stored as static JSON at `static/data/dashboard.json` (generated by `generate_dashboard_data.py`) and rendered with Chart.js.
 
 ---
 
-## 📊 Dataset Links & Credits
+## ⚠️ Limitations & Disclaimer
 
-- **Primary Dataset:** UCI Machine Learning Repository - *Student Performance Dataset* (Cortez and Silva, 2008).  
+- Predictions are statistical estimates based on a limited benchmark dataset. They are **not guarantees** of individual outcomes.
+- The dropout risk result is a simple rule-based screen, not a validated clinical or institutional tool.
+- This project is intended for educational and demonstration purposes. It should not be the sole basis for decisions about any student.
+
+---
+
+## 📊 Dataset & Credits
+
+- **Primary dataset:** UCI Machine Learning Repository, *Student Performance* (Cortez and Silva, 2008).
   DOI: [10.24432/C5TG7T](https://archive.ics.uci.edu/dataset/320/student+performance)
-- **Kaggle Distribution:** [devansodariya/student-performance-data](https://www.kaggle.com/datasets/devansodariya/student-performance-data)
-- Raw bundled data is located at `data/student_data.csv`.
+- **Kaggle distribution:** [devansodariya/student-performance-data](https://www.kaggle.com/datasets/devansodariya/student-performance-data)
+- The bundled data file is located at `data/student_data.csv`.
 
 ---
 
 ## 💻 Tech Stack
 
-- **Backend:** Python 3, Flask, Gunicorn, Scikit-Learn, Pandas, NumPy, Joblib, Flask-CORS
-- **Frontend:** HTML5, CSS3 (Modern Glassmorphism & responsive CSS grid), Vanilla JavaScript (ES6+ fetch API)
-- **Data Visualization:** Chart.js `v4.4.7` (Pinned UMD CDN)
-- **Hosting / Deployment:** GitHub Pages (Static frontend mode) / Render, Railway, Heroku (Full-stack Flask mode)
+- **Backend:** Python 3, Flask, Gunicorn, Scikit-learn, Pandas, NumPy, Joblib, Flask-CORS
+- **Frontend:** HTML5, CSS3 (glassmorphism styling, responsive grid), Vanilla JavaScript (ES6+, Fetch API)
+- **Data visualization:** Chart.js v4.4.7 (pinned UMD build via CDN)
+- **Hosting:** GitHub Pages (static mode) or Render / Railway / Heroku (Flask mode)
 
 ---
 
@@ -74,77 +89,79 @@ The **Student Success Predictor** provides educators, students, and institutiona
 
 ```text
 student-success-predictor/
-├── .gitattributes             # Git attributes config (* text=auto)
-├── .gitignore                # Git ignore patterns
-├── README.md                 # Project documentation
-├── requirements.txt          # Pinned Python package dependencies
-├── app.py                    # Flask application & prediction API endpoints
-├── train_model.py            # Reproducible model training & metrics evaluator
-├── generate_dashboard_data.py# Generates static/data/dashboard.json from dataset
-├── download_data.py          # Dataset download & extraction utility
-├── extract_weights.py        # Extracts weights for client-side JavaScript engine
-├── index.html                # GitHub Pages redirect entry point
+├── .gitattributes              # Git attributes (* text=auto)
+├── .gitignore                  # Git ignore patterns
+├── README.md                   # Project documentation
+├── requirements.txt            # Pinned Python dependencies
+├── app.py                      # Flask app and prediction API endpoints
+├── train_model.py              # Model training and metrics evaluation
+├── generate_dashboard_data.py  # Generates static/data/dashboard.json
+├── download_data.py            # Dataset download and extraction utility
+├── extract_weights.py          # Extracts weights for the client-side engine
+├── index.html                  # GitHub Pages redirect entry point
 ├── data/
-│   └── student_data.csv      # UCI Student Performance benchmark dataset
+│   └── student_data.csv        # Benchmark dataset
 ├── model/
-│   ├── metrics.json          # R2 and MAE training evaluation metrics
-│   ├── model_columns.pkl     # Feature column names (316 bytes)
-│   └── performance_model.pkl # Trained RandomForestRegressor (~2.35 MB)
-├── templates/                # Flask Jinja2 HTML templates
-│   ├── index.html            # Landing / Home page
-│   ├── predict.html          # Performance prediction form
-│   ├── dropout.html          # Rule-based dropout risk assessment
-│   ├── dashboard.html        # Interactive Chart.js analytics dashboard
-│   └── about.html            # System architecture & project documentation
+│   ├── metrics.json            # R² and MAE evaluation metrics
+│   ├── model_columns.pkl       # Feature column names
+│   └── performance_model.pkl   # Trained RandomForestRegressor
+├── templates/                  # Flask Jinja2 templates
+│   ├── index.html              # Home page
+│   ├── predict.html            # Performance prediction form
+│   ├── dropout.html            # Dropout risk assessment
+│   ├── dashboard.html          # Chart.js analytics dashboard
+│   └── about.html              # Architecture and documentation
 └── static/
     ├── css/
-    │   └── style.css         # Responsive styling & themes
+    │   └── style.css           # Responsive styling and themes
     ├── data/
-    │   └── dashboard.json    # Authentic aggregate statistics for charts
-    ├── images/               # Visual assets & background banners
+    │   └── dashboard.json      # Aggregate statistics for charts
+    ├── images/                 # Visual assets and banners
     └── js/
-        ├── charts.js         # Chart.js initialization & data fetcher
-        └── script.js         # Form validation & dual-mode prediction handler
+        ├── charts.js           # Chart.js setup and data loader
+        └── script.js           # Form validation and dual-mode prediction handler
 ```
 
 ---
 
 ## 🛠️ Setup & Local Development
 
-### 1. Install Dependencies
+### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Train Model & Generate Dashboard Data (Optional)
+### 2. Train the model and generate dashboard data (optional)
 ```bash
 python train_model.py
 python generate_dashboard_data.py
 ```
 
-### 3. Run the Flask Web Application
+### 3. Run the Flask application
 ```bash
 python app.py
 ```
-Open **`http://127.0.0.1:5000`** in your browser.
+Open **http://127.0.0.1:5000** in your browser.
 
 ---
 
 ## 🚀 Deployment Guide
 
-### A. Deploy to GitHub Pages (Static Mode)
-1. Commit all files and push to your GitHub repository:
+### A. GitHub Pages (static mode)
+1. Commit and push all files to your repository:
    ```bash
    git push origin main
    ```
-2. Navigate to your repository **Settings > Pages**.
-3. Under **Build and deployment**, set Source to **Deploy from a branch** and select `main` / `root`.
-4. The site will be available at `https://<username>.github.io/<repo>/`. The root `index.html` automatically routes users to `templates/index.html` and executes the client-side ML engine.
+2. Go to **Settings → Pages**.
+3. Under **Build and deployment**, set Source to **Deploy from a branch**, then choose the `main` branch and `/ (root)` folder.
+4. The site will be available at `https://<username>.github.io/<repo>/`. The root `index.html` redirects to `templates/index.html`, and predictions run entirely in the browser.
 
-### B. Deploy to Cloud (Flask Server Mode)
-- **Render / Railway / Heroku:**
-  - Build Command: `pip install -r requirements.txt`
-  - Start Command: `gunicorn app:app`
+> In static mode there is no Python backend, so the Flask-only features (the `RandomForestRegressor` model and API endpoints) are replaced by the client-side engine.
+
+### B. Cloud hosting (Flask mode)
+For Render, Railway, or Heroku:
+- **Build command:** `pip install -r requirements.txt`
+- **Start command:** `gunicorn app:app`
 
 ---
 
@@ -156,11 +173,11 @@ Open **`http://127.0.0.1:5000`** in your browser.
 
 | Dropout Risk Assessment | Analytics Dashboard |
 | :---: | :---: |
-| ![Dropout Risk Alert](static/images/risk.png) | ![Analytics Dashboard](static/images/dashboard_hero.png) |
+| ![Dropout Risk Assessment](static/images/risk.png) | ![Analytics Dashboard](static/images/dashboard_hero.png) |
 
 ---
 
 ## 👥 Credits & Attribution
 
-- Built by **Reddy Website Builders**
-- Dataset provided by **P. Cortez and A. Silva**, *Using Data Mining to Predict Secondary School Student Performance*, 2008.
+- Built by **Reddy Website Builders**.
+- Dataset by **P. Cortez and A. Silva**, *Using Data Mining to Predict Secondary School Student Performance*, 2008.
